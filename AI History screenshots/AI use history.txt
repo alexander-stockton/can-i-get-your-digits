@@ -5,7 +5,7 @@ Prompt: Which of the python libraries from this page: https://www.geeksforgeeks.
         The model must read in attributes and use each numerical component of the attribute to classify the attribute as an integer from 0 to 9.
         Example data: 0,0,0,2,12,2,3,7,2,6,1,6,8,2,9,4,2,7,3,1
         (the first component is a bias entry and the final component is the target)
-Reason: Needed to know which library was best to use for this project
+Reason: Needed to know which library was best to use for this project (ended up not using any existing ML libraries)
 
 Prompt: What does the readline() function return in Python 3.14? How might I read a line into a variable and immediately test if it's an empty string in the condition of a while loop?
 Reason: I'm not good with python yet

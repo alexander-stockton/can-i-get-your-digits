@@ -1,5 +1,5 @@
-from save_load import save_perceptron,load_perceptron
-from printout import printout
+from resources.save_load import save,load
+from resources.printout import printout
 
 import math
 
@@ -77,15 +77,18 @@ def main():
                 # Train perceptron
     
     else:
-        # Generation by Claude Sonnet 4.5
+        # (modified) Generation by Claude Sonnet 4.5
+        #   This is a modified version of the loading implementation from
+        #   resources/save_load.py. Including this note because I lost the screenshots
+        #   of the prompt I used to generate the save_load file and its implementation.
         try:
-            weights = load_perceptron('perceptron.txt')
+            weights = load('./data/perceptron.csv')
             print("Loaded existing perceptron")
         except FileNotFoundError:
             # Initialize new perceptron if no saved model exists
-            weights = [0.0] * 20  # or random small values
+            weights = []
             print("Initialized new perceptron\n")
-        # End Generation by Claude Sonnet 4.5
+        # End (modified) Generation by Claude Sonnet 4.5
 
     filename = input("Enter training data filename (default: 'optdigits.tra'): ") or "optdigits.tra"
     print("\n")
