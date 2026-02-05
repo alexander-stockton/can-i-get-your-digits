@@ -1,4 +1,4 @@
-# "Can I Have Your Digits" Project
+# Project - Can I Get Your Digits
 ### Machine Learning Project for CMSC-5723
 
 ---
