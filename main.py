@@ -2,6 +2,8 @@ from resources.save_load import save,load
 from resources.perceptron import train,test
 
 def main():
+    print("Note: Terminal should run in full screen for best UI readability.\n\n")
+    
     # Do you want to train the model?
     # Yes >
     # No  >
@@ -15,19 +17,28 @@ def main():
         print("\n")
 
         print("Starting training process...\n")
+
+        # Initialize weights based on input count (ignore target)
+        weights = []
+        with open(filename, "r") as _:
+            _tempinputs = _.readline().strip().split(",")
+            for _ in range(len(_tempinputs) - 1):
+                weights.append(0.0)
+        
+
         # Process training data
         with open(filename, "r") as file_reader:
             line_number = 0
             for _line in file_reader:
                 line_number += 1
-                line_data = _line.split(",")
+                line_data = _line.strip().split(",")
 
                 # Extract inputs and expected output
-                inputs = [int(x) for x in line_data[0:-2]]
+                inputs = [int(x) for x in line_data[0:-1]]
                 target = int(line_data[-1])
-                weights = [0.0 for _ in range(len(inputs))]
 
                 # Train perceptron
+                weights = train(weights, inputs, target, learning_rate, passes)
     
     else:
         # (modified) Generation by Claude Sonnet 4.5
@@ -39,7 +50,7 @@ def main():
             print("Loaded existing perceptron")
         except FileNotFoundError:
             # Initialize new perceptron if no saved model exists
-            weights = []
+            weights = [0.0 for _ in range(64)]  # Assuming 64 inputs for the perceptron
             print("Initialized new perceptron\n")
         # End (modified) Generation by Claude Sonnet 4.5
 

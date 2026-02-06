@@ -6,8 +6,8 @@ def save(weights, filename='./data/perceptron.csv'):
 def load(filename='./data/perceptron.csv'):
     weights = []
     with open(filename, 'r') as f:
-        for line in f:
-            weights.append(float(line.strip().split(',')))
+        for _ in f:
+            weights.append(float(_.strip().split(',')))
     return weights
 
 

@@ -40,11 +40,12 @@ def train(weights_old, inputs, target, learning_rate, passes):
             weights_new.append(weights_old[i] + adjustments[i])
 
         if flag_watching:
-            printout(inputs, weights_new, prediction)
-            print(f"Target: {target}, Predicted: {prediction:.3f}\n")
+            printout(inputs, weights_old, prediction, target, adjustments)
             input("Press anything to continue...\n")
+        
+        weights_old = weights_new
 
-    return None
+    return weights_new
 
 def test():
     # Skeleton function
