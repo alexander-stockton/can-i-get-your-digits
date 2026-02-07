@@ -1,13 +1,21 @@
+import os
+
 def save(weights, filename='./data/perceptron.csv'):
     with open(filename, 'w') as f:
         for _ in weights:
             f.write(f"{_},")
+    
+    with open(filename, 'ab') as f:
+        f.seek(-1, 2)
+        f.truncate()
 
 def load(filename='./data/perceptron.csv'):
     weights = []
     with open(filename, 'r') as f:
         for _ in f:
-            weights.append(float(_.strip().split(',')))
+            _weights = _.split(',')
+            for w in _weights:
+                weights.append(float(w))
     return weights
 
 

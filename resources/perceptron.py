@@ -61,7 +61,7 @@ def train(weights_old, inputs, target, learning_rate, passes, flags, line_number
             weights_new.append(weights_old[i] - (adjustments[i] * inputs[i]))
 
         if flags.flag_watching:
-            printout_training(inputs, weights_old, prediction, target, adjustments, line_number)
+            printout_training(inputs, weights_old, prediction, target, adjustments, line_number, _)
         if flags.flag_detailed:
             input("Press anything to continue...\n")
         
@@ -69,12 +69,12 @@ def train(weights_old, inputs, target, learning_rate, passes, flags, line_number
 
     return weights_new
 
-def test(inputs, target, flags, line_number, weights):
+def test(inputs, target, flags, line_number, weights, total_error):
     
     # Get prediction and rough error estimate
     prediction = perceptron_predict(weights, inputs, flags)
-    error = (abs(prediction-(target+1)/10)/((target+1)/10))*100 if target != 0 else (abs(prediction-(target+1)/10))*100
+    error = (prediction*10 - target)
 
-    total_error = printout_testing(inputs, target, prediction, error, flags, line_number)
+    total_error = printout_testing(inputs, target, prediction, error, flags, line_number, total_error)
     # Skeleton function
     return total_error

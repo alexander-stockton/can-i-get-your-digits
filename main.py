@@ -16,7 +16,7 @@ def main():
     if flags.flag_training:
         filename = input("Enter training data filename (default: './data/optdigits.tra'): ") or "./data/optdigits.tra"
         learning_rate = float(input("Enter learning rate from 0.0 to 1.0 (default: 0.2): ") or 0.2)
-        passes = int(input("Enter number of training passes (default: 10,000): ") or 10000)
+        passes = int(input("Enter number of training passes (default: 10): ") or 10)
         print("\n")
 
         print("Starting training process...\n")
@@ -72,6 +72,7 @@ def main():
             print("Testing...\n")
             
             line_number = 0
+            total_error = 0
             for _line in file_reader:
                 line_number += 1
                 line_data = _line.strip().split(",")
@@ -81,7 +82,7 @@ def main():
                 target = int(line_data[-1])
 
                 # Train perceptron
-                total_error = test(inputs, target, flags, line_number, weights)
+                total_error = test(inputs, target, flags, line_number, weights, total_error)
             
             print(f"\nRough Accuracy Estimate: {100 - (total_error/line_number):.2f}%")
             

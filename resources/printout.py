@@ -1,6 +1,6 @@
 import os
 
-def printout_training(inputs, weights, prediction, target, adjustments, line):
+def printout_training(inputs, weights, prediction, target, adjustments, line, epoch):
     # Clear console
     os.system('cls')
     print("Training...\n")
@@ -94,10 +94,10 @@ def printout_training(inputs, weights, prediction, target, adjustments, line):
     error = prediction - (target/10)
     if (error < 0):
         data += f" Prediction: {prediction:.3f} ({classification}) " \
-                f" | Target: {target}     | Error:{error:.3f}   |"
+                f" | Target: {target}     | Error:{error:.3f}   | Pass: {epoch}"
     else:
         data += f" Prediction: {prediction:.3f} ({classification}) " \
-                f" | Target: {target}     | Error: {error:.3f}   |"
+                f" | Target: {target}     | Error: {error:.3f}   | Pass: {epoch}"
 
     # *----------------...---*
     # |
@@ -136,7 +136,7 @@ def printout_training(inputs, weights, prediction, target, adjustments, line):
 
     print(data)
 
-def printout_testing(inputs, target, prediction, error, flags, line):
+def printout_testing(inputs, target, prediction, error, flags, line, total_error):
     
     # Create layer string based on input size
     layer = ""
@@ -180,18 +180,19 @@ def printout_testing(inputs, target, prediction, error, flags, line):
 
     # Line: 1 | Prediction: 0.735 (7) | Target: 8 | Error: ~8.13%
     data += f"Line: {line} | "
-    Total_Error += error
     
     # Round prediction to get classification
     classification = round(prediction * 10).__str__()
 
+    total_error += abs(float(classification)-target)
+
     # Print try data and account for negatives in strings
     if (error < 0):
         data += f" Prediction: {prediction:.3f} ({classification}) " \
-                f" | Target: {target}     | Error (%):~{error:.3f}%"
+                f" | Target: {target}     | Error (%):~{error:.3f}% | Average Error: {(total_error/line):.3f}"
     else:
         data += f" Prediction: {prediction:.3f} ({classification}) " \
-                f" | Target: {target}     | Error: ~{error:.3f}%"
+                f" | Target: {target}     | Error: ~{error:.3f}% | Average Error: {(total_error/line):.3f}"
     
     # *----------------...---*
     data += "\n*" + layer + "*\n"
@@ -201,4 +202,4 @@ def printout_testing(inputs, target, prediction, error, flags, line):
 
     print(data)
 
-    return Total_Error
+    return total_error
