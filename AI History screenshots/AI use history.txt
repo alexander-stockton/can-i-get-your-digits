@@ -13,3 +13,13 @@ Reason: I'm not good with python yet
 Prompt: If I train my own number-classification model in python, how would I go about storing it so I can close the program, re-open it, and load the model in again?
 Reason: This project is about writing the machine learning model/code, not about saving/loading, so I'm having Claude do that for me
 
+2/7/2026
+Model: Claude Sonnet 4.5
+Prompt: My printout function for this project takes in several parameters and displays them in the console using formatted strings. Before I print the classification of a prediction, though, I make some operations on it. Originally, I had a large if/elif statement that essentially ceil'd the classification and put it into a string. Now I want to use an inline conditional to multiply the prediction by 100 (so 0.18 will become 18), then take the last digit of that (18 will become 8) and compare that to 5. If it's equal to or over 5, multiply prediction by 10 (0.18 becomes 1.8) and raise it to the nearest integer (1.8 becomes 2), so 0.18 classifies as 2. In the case of 0.14, it becomes 14, then 4. 4 is less than 5, so it rounds *down* to 0.1 which just classifies at 1.
+
+        Can you tell me why
+        ```
+        (int(prediction*100) % 10 >= 5) * math.ceil(prediction*10) + (int(prediction*100) % 10 < 5) * math.floor(prediction*10)
+        ```
+        doesn't do that?
+Reason: Debugging (i didn't know round() was a native python function)

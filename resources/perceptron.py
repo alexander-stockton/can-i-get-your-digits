@@ -1,46 +1,68 @@
-from resources.printout import printout
+from resources.printout import printout_training
 import math
 
-def perceptron_predict(weights, inputs):
+def perceptron_predict(weights, inputs, flags):
     # Step 1: Calculate Weighted Sum
     weighted_sum = sum(w * x for w, x in zip(weights, inputs))
 
+    if flags.flag_detailed:
+        print(f"weighted sum: {weighted_sum:.3f}")
+        input("...")
+
     # Step 2: Activation Function
-    sigmoid = 1 / (1 + math.exp(-weighted_sum))
+    # Prevent overflow of sigmoid function
+
+    sigmoid = 1 / (1 + math.exp(-weighted_sum/170))
+
+    if flags.flag_detailed:
+        print(f"sig: {sigmoid:.3f}")
+        input("...")
 
     # Step 3: Return Prediction
     return sigmoid
 
-def perceptron_calculate_adjustments(prediction, weights, target, learning_rate):
+def perceptron_calculate_adjustments(prediction, weights, target, learning_rate, flags):
     # Step 1: Get Error from target and prediction
-    error = prediction - target
+    error = prediction - (target/10)
+
+    if flags.flag_detailed:
+        print(f"error: {error:.3f}")
+        input("...")
 
     # Step 2: Get derivative of activation function
     sig_deriv = prediction * (1 - prediction)
 
+    if flags.flag_detailed:
+        print(f"deriv: {sig_deriv:.3f}")
+        input("...")
+
     # Step 3: Calculate adjustment for each weight
     adj = error * sig_deriv * learning_rate
-    adjustments = [adj * x for x in weights]
+
+    if flags.flag_detailed:
+        print(f"adj: {adj:.3f}")
+        input("...")
+
+    adjustments = [adj]*len(weights)
 
     # Step 4: Return adjustments
     return adjustments
 
-def train(weights_old, inputs, target, learning_rate, passes):
-
-    flag_watching = (input("Do you want to watch? (y/n): ") == 'y')
+def train(weights_old, inputs, target, learning_rate, passes, flags, line_number):
 
     # Repeat {passes} times
     for _ in range(passes):
-        prediction = perceptron_predict(weights_old, inputs)
-        adjustments = perceptron_calculate_adjustments(prediction, weights_old, target, learning_rate)
+        prediction = perceptron_predict(weights_old, inputs, flags)
+        adjustments = perceptron_calculate_adjustments(prediction, weights_old, target, learning_rate, flags)
 
         # Calculate new weights (separate variable for printout purposes)
         weights_new = []
         for i in range(len(weights_old)):
-            weights_new.append(weights_old[i] + adjustments[i])
+            weights_new.append(weights_old[i] - (adjustments[i] * inputs[i]))
 
-        if flag_watching:
-            printout(inputs, weights_old, prediction, target, adjustments)
+        if flags.flag_watching:
+            printout_training(inputs, weights_old, prediction, target, adjustments, line_number)
+        if flags.flag_detailed:
             input("Press anything to continue...\n")
         
         weights_old = weights_new
