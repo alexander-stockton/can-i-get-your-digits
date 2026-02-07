@@ -1,4 +1,4 @@
-from resources.printout import printout_training
+from resources.printout import printout_testing, printout_training
 import math
 
 def perceptron_predict(weights, inputs, flags):
@@ -69,6 +69,12 @@ def train(weights_old, inputs, target, learning_rate, passes, flags, line_number
 
     return weights_new
 
-def test():
+def test(inputs, target, flags, line_number, weights):
+    
+    # Get prediction and rough error estimate
+    prediction = perceptron_predict(weights, inputs, flags)
+    error = (abs(prediction-(target+1)/10)/((target+1)/10))*100 if target != 0 else (abs(prediction-(target+1)/10))*100
+
+    total_error = printout_testing(inputs, target, prediction, error, flags, line_number)
     # Skeleton function
-    return None
+    return total_error

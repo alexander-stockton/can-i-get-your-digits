@@ -1,3 +1,4 @@
+import os
 from resources import flags
 from resources.save_load import save,load
 from resources.perceptron import train,test
@@ -46,7 +47,7 @@ def main():
             save(weights, _save)
             print(f"Model saved!")
 
-
+    # Testing Branch
     else:
         # (modified) Generation by Claude Sonnet 4.5
         #   This is a modified version of the loading implementation from
@@ -62,10 +63,31 @@ def main():
             print("Initialized new perceptron\n")
         # End (modified) Generation by Claude Sonnet 4.5
 
-    filename = input("Enter training data filename (default: 'optdigits.tra'): ") or "optdigits.tra"
-    print("\n")
+        filename = input("Enter test data filename (default: './data/optdigits.tes'): ") or "./data/optdigits.tes"
 
-    # Process input data for classification
+        # Process testing data
+        with open(filename, "r") as file_reader:
+            # Clear console
+            os.system('cls')
+            print("Testing...\n")
+            
+            line_number = 0
+            for _line in file_reader:
+                line_number += 1
+                line_data = _line.strip().split(",")
+
+                # Extract inputs and expected output
+                inputs = [int(x) for x in line_data[0:-1]]
+                target = int(line_data[-1])
+
+                # Train perceptron
+                total_error = test(inputs, target, flags, line_number, weights)
+            
+            print(f"\nRough Accuracy Estimate: {100 - (total_error/line_number):.2f}%")
+            
+            # Save trained model
+            input("\nTesting complete! Press anything to exit...")
+        print("\n")
 
 if (__name__ == "__main__"):
     main()
