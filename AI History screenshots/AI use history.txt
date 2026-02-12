@@ -8,10 +8,10 @@ Prompt: Which of the python libraries from this page: https://www.geeksforgeeks.
 Reason: Needed to know which library was best to use for this project (ended up not using any existing ML libraries)
 
 Prompt: What does the readline() function return in Python 3.14? How might I read a line into a variable and immediately test if it's an empty string in the condition of a while loop?
-Reason: I'm not good with python yet
+Reason: I'm not good with python yet (I later used a different method, shown in the code)
 
 Prompt: If I train my own number-classification model in python, how would I go about storing it so I can close the program, re-open it, and load the model in again?
-Reason: This project is about writing the machine learning model/code, not about saving/loading, so I'm having Claude do that for me
+Reason: Did not know how file reading/writing worked in python, only in c++
 
 2/7/2026
 Model: Claude Sonnet 4.5
@@ -22,4 +22,12 @@ Prompt: My printout function for this project takes in several parameters and di
         (int(prediction*100) % 10 >= 5) * math.ceil(prediction*10) + (int(prediction*100) % 10 < 5) * math.floor(prediction*10)
         ```
         doesn't do that?
-Reason: Debugging (i didn't know round() was a native python function)
+Reason: Debugging (I didn't know round() was a native python function)
+
+2/11/2026
+Model: Claude Sonnet 4.5
+Prompt: If I have a digit classification problem where I read in a line of numeric attributes and predict which number it represents (0-9), how many perceptrons would I need?
+Reason: Using only one perceptron gave WAYYY too inaccurate results (15%-20% accuracy), so I needed to restructure the whole project 😭
+
+Prompt: Use these files to construct a README documentation for github
+Reason: I used GitHub to hold backups of the project files, and it would be cool to show this project to employers in the future.
